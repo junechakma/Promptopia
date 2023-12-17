@@ -2,6 +2,8 @@ import NextAuth from "next-auth/next";
 import GoogleProvider from 'next-auth/providers/google'
 import { signIn } from "next-auth/react";
 
+import { connectDB } from "../../../../../utils/database";
+
 console.log(
     {
         clientId: process.env.GOOGLE_ID,
@@ -22,8 +24,12 @@ const handler = NextAuth({
 
     },
     async signIn({ profile }) {
-        try{
-            
+        try {
+            await connectDB();
+
+            return true;
+        } catch (error) {
+            return false;
         }
 
     }
